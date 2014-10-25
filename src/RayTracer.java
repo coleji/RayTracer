@@ -49,6 +49,7 @@ public class RayTracer implements GLEventListener
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
+    
 
     public void display(GLAutoDrawable drawable) {
         GL2 gl  = drawable.getGL().getGL2();
