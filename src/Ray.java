@@ -20,7 +20,7 @@ public class Ray {
 	 */
 	public Ray(Point3d start, Point3d mid){
 		this.start = start;
-		Vector v = new Vector(start.getX()+mid.getX(),start.getY()+mid.getY(),start.getZ()+mid.getZ());
+		Vector v = new Vector(mid.getX() - start.getX(),mid.getY() - start.getY(),mid.getZ() - start.getZ());
 		this.dir = UnitVector.unitize(v); // converts vector to unit length
 	}	
 	

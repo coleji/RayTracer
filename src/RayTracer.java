@@ -58,18 +58,26 @@ public class RayTracer implements GLEventListener
         gl.glBegin(GL2.GL_POINTS);           
 
         
-        Point3d focus = new Point3d(500d, 500d, -866d);
+        Point3d focus = new Point3d(500.00d, 500.00d, -866.00d);
         Traceable[] objects = {
-        		new Plane(1,0,0,10,Color.BLUE)
+        		new Plane(0d,0d,1d,-1000d,Color.BLUE), // back
+        		new Plane(1,0,0,0,Color.RED), // left
+        		new Plane(1,0,0,-1000,Color.GREEN), // right
+        		new Plane(0,1,0,0,Color.YELLOW), // bottom
+        		new Plane(0,1,0,-1000,Color.BLACK) // top
         };
         
         for (double i=0; i<500; i++){
         	for (double j=0; j<500; j++){
-        		Ray ray = new Ray(focus, new Point3d(i,j,-433));
+        		Ray ray = new Ray(focus, new Point3d(250d+i,250d+j,-433.00d));
         		Point3d intersect = null;
+        		gl.glColor3f(0f,0f,0f);
         		for (int k=0; k<objects.length; k++) {
-        			intersect = objects[k].intersect(ray);
-        			gl.glColor3f((float)objects[k].getColor().getRed(), (float)objects[k].getColor().getGreen(), (float)objects[k].getColor().getBlue());
+        			Point3d intersectTemp = objects[k].intersect(ray);
+        			if (intersect == null || focus.distance(intersectTemp) < focus.distance(intersect)) {
+        				intersect = intersectTemp;
+        				gl.glColor3f((float)objects[k].getColor().getRed(),(float)objects[k].getColor().getGreen(),(float)objects[k].getColor().getBlue());
+        			}
         			/*
         			System.out.println((float)objects[k].getColor().getRed());
         			System.out.println((float)objects[k].getColor().getGreen());
@@ -78,8 +86,8 @@ public class RayTracer implements GLEventListener
         			System.out.println(intersect.getY());
         			System.out.println(intersect.getZ() + "\n\n");
         			*/
+        			
         		}
-        		
         		gl.glVertex3d(i,j,0);
         	}
         }

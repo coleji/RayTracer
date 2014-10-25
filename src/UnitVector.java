@@ -19,7 +19,7 @@ public class UnitVector extends Vector {
 		double l = Math.sqrt(Math.pow(x,2) + Math.pow(y,2) + Math.pow(z,2));
 		this.x = x/l;
 		this.y = y/l;
-		this.z = z/l;		
+		this.z = z/l;
 	}
 	
 	public UnitVector(Point3d p1, Point3d p2){
