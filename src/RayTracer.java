@@ -25,7 +25,6 @@ import javax.media.opengl.*;
 import javax.media.opengl.awt.*;
 import javax.media.opengl.glu.*;
 
-import com.jogamp.opengl.util.FPSAnimator;
 
 public class RayTracer implements GLEventListener
 {
@@ -56,17 +55,34 @@ public class RayTracer implements GLEventListener
         gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
         gl.glPointSize(2f);        
         gl.glBegin(GL2.GL_POINTS);           
-        gl.glColor3f(0.0f, 0.0f, 0.0f); // black lines
+
         
         Point3d focus = new Point3d(500d, 500d, -866d);
-        Sphere sp = new Sphere(new Point3d(500d, 500d, 500d),20d);
+        Traceable[] objects = {
+        		new Plane(1,0,0,10,Color.BLUE)
+        };
         
         for (double i=0; i<500; i++){
         	for (double j=0; j<500; j++){
         		Ray ray = new Ray(focus, new Point3d(i,j,-433));
-        		// TODO: "look" method here
+        		Point3d intersect = null;
+        		for (int k=0; k<objects.length; k++) {
+        			intersect = objects[k].intersect(ray);
+        			gl.glColor3f((float)objects[k].getColor().getRed(), (float)objects[k].getColor().getGreen(), (float)objects[k].getColor().getBlue());
+        			/*
+        			System.out.println((float)objects[k].getColor().getRed());
+        			System.out.println((float)objects[k].getColor().getGreen());
+        			System.out.println((float)objects[k].getColor().getBlue());
+        			System.out.println(intersect.getX());
+        			System.out.println(intersect.getY());
+        			System.out.println(intersect.getZ() + "\n\n");
+        			*/
+        		}
+        		
+        		gl.glVertex3d(i,j,0);
         	}
         }
+        System.out.println("done");
         
         
         gl.glEnd();                         
@@ -87,13 +103,12 @@ public class RayTracer implements GLEventListener
         GLProfile.initSingleton();
         System.setProperty("sun.awt.noerasebackground", "true"); // sometimes necessary to avoid erasing over the finished window
 
-        JFrame frame = new JFrame("Cube Spinner");
+        JFrame frame = new JFrame("Ray Tracer");
         GLCanvas canvas = new GLCanvas();
         canvas.setPreferredSize(new Dimension(500,500));  // desired size, not guaranteed
 
         RayTracer renderer = new RayTracer();
         canvas.addGLEventListener(renderer);
-
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(canvas, BorderLayout.CENTER);
         frame.getContentPane().add(renderer.statusLine, BorderLayout.SOUTH);

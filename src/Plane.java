@@ -3,11 +3,12 @@ import java.awt.Color;
 public class Plane extends Traceable {
 	private double A,B,C,D;
 	
-	public Plane (double A, double B, double C, double D){
+	public Plane (double A, double B, double C, double D, Color color){
 		this.A = A;
 		this.B = B;
 		this.C = C;
 		this.D = D;
+		this.color = color;
 	}
 
 	/**
