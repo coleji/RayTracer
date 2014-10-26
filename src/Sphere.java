@@ -4,9 +4,10 @@ public class Sphere extends Traceable {
 	private Point3d c; // center
 	private double r;  // radius
 	
-	public Sphere(Point3d c, double r){
+	public Sphere(Point3d c, double r, Color color){
 		this.c = c;
 		this.r = Math.abs(r); // no negative values for radius
+		this.color = color;
 	}
 	
 	public Point3d intersect(Ray r){
@@ -42,13 +43,12 @@ public class Sphere extends Traceable {
 
 
 	public Vector getNormal(Point3d p) {
-		// TODO Auto-generated method stub
-		return null;
+		return UnitVector.unitize(new Vector(c,p));
 	}
 
 
 	public Color getColor() {
 		// TODO Auto-generated method stub
-		return null;
+		return color;
 	}
 }

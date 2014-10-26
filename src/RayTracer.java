@@ -46,8 +46,8 @@ public class RayTracer implements GLEventListener
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
         //TODO: what is this crap
-    //    gl.glOrtho(0f, 500f, 0f, 500f, -500f, 0f);
-        gl.glOrtho(0,500,0,500,0,500);
+        gl.glOrtho(0f, 500f, 0f, 500f, -500f, 0f);
+       // gl.glOrtho(0,800,0,800,0,800);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
@@ -67,8 +67,9 @@ public class RayTracer implements GLEventListener
         		new Plane(-1d,0d,0d,1000d,Color.RED), // right
         		new Plane(0d,1d,0d,0d,Color.RED), // bottom
         		new Plane(0d,-1d,0d,1000d,Color.RED) // top
+        		, new Sphere(new Point3d(600d,500d,650d),300d,Color.BLUE)
         };
-        Point3d light = new Point3d(100d,900d,700d);
+        Point3d light = new Point3d(100d,900d,100d);
         
         for (double i=0; i<500; i++){
         	for (double j=0; j<500; j++){
@@ -104,9 +105,9 @@ public class RayTracer implements GLEventListener
 
         		double dim = lightVectorUV.dot(normalUV); 
         		
-        		dim = dim / (.7d + (.2d * lightDistance * lightDistance));
+        		dim = dim / (.8d + (.55d * lightDistance * lightDistance));
         		
-        		dim = (dim < 0.001) ? 0.001 : dim;
+        		dim = (dim < 0.0008) ? 0.0008 : dim;
         		gl.glColor3f((float)dim*intersectObj.getColor().getRed(),(float)dim*intersectObj.getColor().getGreen(),(float)dim*intersectObj.getColor().getBlue());
         		gl.glVertex3d(i,j,0);
         	}
