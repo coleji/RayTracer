@@ -45,7 +45,9 @@ public class RayTracer implements GLEventListener
         GL2 gl = drawable.getGL().getGL2();  
         gl.glMatrixMode(GL2.GL_PROJECTION);
         gl.glLoadIdentity();
-        gl.glOrtho(0f, 500f, 0f, 500f, -500f, 0f);
+        //TODO: what is this crap
+    //    gl.glOrtho(0f, 500f, 0f, 500f, -500f, 0f);
+        gl.glOrtho(0,500,0,500,0,500);
         gl.glMatrixMode(GL2.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
