@@ -62,23 +62,25 @@ public class RayTracer implements GLEventListener
         
         Point3d focus = new Point3d(500.00d, 500.00d, -866.00d);
         Traceable[] objects = {
-        		new Plane(0d,0d,1d,-1000d,Color.BLUE), // back
-        		new Plane(1,0,0,0,Color.RED), // left
-        		new Plane(1,0,0,-1000,Color.GREEN), // right
-        		new Plane(0,1,0,0,Color.YELLOW), // bottom
-        		new Plane(0,1,0,-1000,Color.BLACK) // top
+        		new Plane(0d,0d,-1d,1000d,Color.RED), // back
+        		new Plane(1d,0d,0d,0d,Color.RED), // left
+        		new Plane(-1d,0d,0d,1000d,Color.RED), // right
+        		new Plane(0d,1d,0d,0d,Color.RED), // bottom
+        		new Plane(0d,-1d,0d,1000d,Color.RED) // top
         };
+        Point3d light = new Point3d(100d,900d,700d);
         
         for (double i=0; i<500; i++){
         	for (double j=0; j<500; j++){
         		Ray ray = new Ray(focus, new Point3d(250d+i,250d+j,-433.00d));
         		Point3d intersect = null;
+        		Traceable intersectObj = null;
         		gl.glColor3f(0f,0f,0f);
         		for (int k=0; k<objects.length; k++) {
         			Point3d intersectTemp = objects[k].intersect(ray);
-        			if (intersect == null || focus.distance(intersectTemp) < focus.distance(intersect)) {
+        			if (intersectTemp.getZ() > -866 && (intersect == null || focus.distance(intersectTemp) < focus.distance(intersect))) {
         				intersect = intersectTemp;
-        				gl.glColor3f((float)objects[k].getColor().getRed(),(float)objects[k].getColor().getGreen(),(float)objects[k].getColor().getBlue());
+        				intersectObj = objects[k];
         			}
         			/*
         			System.out.println((float)objects[k].getColor().getRed());
@@ -90,6 +92,22 @@ public class RayTracer implements GLEventListener
         			*/
         			
         		}
+
+        		Vector lightVector = new Vector(intersect,light);
+        		double lightDistance = intersect.distance(light);
+        		Vector normal = intersectObj.getNormal(intersect);
+        		
+        		
+        		UnitVector lightVectorUV = UnitVector.unitize(lightVector);
+        		UnitVector normalUV = UnitVector.unitize(normal);
+
+
+        		double dim = lightVectorUV.dot(normalUV); 
+        		
+        		dim = dim / (.7d + (.2d * lightDistance * lightDistance));
+        		
+        		dim = (dim < 0.001) ? 0.001 : dim;
+        		gl.glColor3f((float)dim*intersectObj.getColor().getRed(),(float)dim*intersectObj.getColor().getGreen(),(float)dim*intersectObj.getColor().getBlue());
         		gl.glVertex3d(i,j,0);
         	}
         }

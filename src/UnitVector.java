@@ -16,6 +16,7 @@ public class UnitVector extends Vector {
 	}
 	
 	public UnitVector(double x, double y, double z){
+		super(x,y,z);
 		double l = Math.sqrt(Math.pow(x,2) + Math.pow(y,2) + Math.pow(z,2));
 		this.x = x/l;
 		this.y = y/l;
@@ -23,6 +24,7 @@ public class UnitVector extends Vector {
 	}
 	
 	public UnitVector(Point3d p1, Point3d p2){
+		super(p1,p2);
 		double x1 = p2.getX() - p1.getX();
 		double y1 = p2.getY() - p1.getY();
 		double z1 = p2.getZ() - p1.getZ();

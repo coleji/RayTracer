@@ -2,8 +2,6 @@
 public class Vector {
 	private double x,y,z;
 	
-	public Vector(){}
-	
 	/**
 	 * Constructs a vector given x,y,z components
 	 * @param x
@@ -43,7 +41,10 @@ public class Vector {
 	 * @return
 	 */
 	public double dot(Vector v){
-		return x*v.getX() + y*v.getY() + z*v.getZ();
+		double a = 0.02;
+		double b = 0.08;
+	//	System.out.println(x + "*" + v.getX() + " + " + y + "*" + v.getY() + " + " + z + "*" + v.getZ() + " = " + (x*v.getX()) + (y*v.getY()) + (z*v.getZ()));
+		return (double)(x*v.getX()) + (double)(y*v.getY()) + (double)(z*v.getZ());
 	}
 	
 	/**

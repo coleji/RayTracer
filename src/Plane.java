@@ -34,8 +34,7 @@ public class Plane extends Traceable {
 	 * Given a point, determines normal vector at that point
 	 */
 	public Vector getNormal(Point3d p) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Vector(A,B,C);
 	}
 
 	/**
